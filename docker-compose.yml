@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: content_management
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      TYPEORM_HOST: postgres
+      TYPEORM_USERNAME: user
+      TYPEORM_PASSWORD: password
+      TYPEORM_DATABASE: content_management
+      TYPEORM_PORT: 5432
+
+volumes:
+  postgres_data:
