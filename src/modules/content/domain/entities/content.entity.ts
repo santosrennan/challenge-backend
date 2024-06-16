@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ContentType } from '@common/enums/content-type.enum';
 
 @ObjectType()
 export class Content {
@@ -12,16 +13,12 @@ export class Content {
   description: string;
 
   @Field(() => String)
-  type: 'video' | 'pdf' | 'image';
+  type: ContentType;
 
   @Field(() => Number)
   views: number;
 
-  constructor(
-    name: string,
-    description: string,
-    type: 'video' | 'pdf' | 'image',
-  ) {
+  constructor(name: string, description: string, type: ContentType) {
     this.name = name;
     this.description = description;
     this.type = type;

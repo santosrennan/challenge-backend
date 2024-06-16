@@ -1,11 +1,25 @@
+import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
+import { ContentType } from '@common/enums/content-type.enum';
+
 export class CreateContentDto {
+  @IsNotEmpty()
   name: string;
+
+  @IsNotEmpty()
   description: string;
-  type: 'video' | 'pdf' | 'image';
+
+  @IsEnum(ContentType)
+  type: ContentType;
 }
 
 export class UpdateContentDto {
+  @IsOptional()
   name?: string;
+
+  @IsOptional()
   description?: string;
-  type?: 'video' | 'pdf' | 'image';
+
+  @IsEnum(ContentType)
+  @IsOptional()
+  type?: ContentType;
 }

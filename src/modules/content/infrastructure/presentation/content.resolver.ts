@@ -5,6 +5,7 @@ import { UseGuards } from '@nestjs/common';
 import { Roles } from '@common/auth/decorators/roles.decorator';
 import { RolesGuard } from '@common/auth/guards/roles.guard';
 import { UserRole } from '@common/auth/roles.enum';
+import { ContentType } from '@common/enums/content-type.enum';
 import {
   CreateContentDto,
   UpdateContentDto,
@@ -30,7 +31,7 @@ export class ContentResolver {
   createContent(
     @Args('name') name: string,
     @Args('description') description: string,
-    @Args('type') type: 'video' | 'pdf' | 'image',
+    @Args('type') type: ContentType,
   ) {
     const createContentDto: CreateContentDto = { name, description, type };
     return this.contentService.create(createContentDto);
@@ -42,7 +43,7 @@ export class ContentResolver {
     @Args('id') id: string,
     @Args('name', { nullable: true }) name?: string,
     @Args('description', { nullable: true }) description?: string,
-    @Args('type', { nullable: true }) type?: 'video' | 'pdf' | 'image',
+    @Args('type', { nullable: true }) type?: ContentType,
   ) {
     const updateContentDto: UpdateContentDto = { name, description, type };
     return this.contentService.update(id, updateContentDto);
