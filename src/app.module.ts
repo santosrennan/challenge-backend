@@ -5,7 +5,8 @@ import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { join } from 'path';
 import { ContentModule } from './modules/content/content.module';
 import { AuthMiddleware } from '@common/auth/middleware/auth.middleware';
-
+import * as dotenv from 'dotenv';
+dotenv.config();
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -21,6 +22,7 @@ import { AuthMiddleware } from '@common/auth/middleware/auth.middleware';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
+      path: '/graphql',
       context: ({ req }) => ({ req }),
     }),
     ContentModule,

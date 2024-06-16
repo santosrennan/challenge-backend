@@ -3,26 +3,25 @@ services:
   postgres:
     image: postgres:13
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
       POSTGRES_DB: content_management
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: user_admin
+      POSTGRES_PASSWORD: password123
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
 
   app:
     build: .
-    ports:
-      - "3000:3000"
+    env_file:
+      - .env
     depends_on:
       - postgres
-    environment:
-      TYPEORM_HOST: postgres
-      TYPEORM_USERNAME: user
-      TYPEORM_PASSWORD: password
-      TYPEORM_DATABASE: content_management
-      TYPEORM_PORT: 5432
+    ports:
+      - '3000:3000'
+    command: >
+      bash -c "npm run build && npm run migration:run && npm run seed:run && npm run start:prod"
+
 
 volumes:
-  postgres_data:
+  pgdata:

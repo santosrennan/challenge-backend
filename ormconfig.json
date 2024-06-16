@@ -1,10 +1,14 @@
 {
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "postgres",
-    "password": "password",
-    "database": "nestjs_db",
-    "entities": ["dist/**/*.entity.js"],
-    "synchronize": true
+  "type": "postgres",
+  "host": "${process.env.TYPEORM_HOST}",
+  "port": "${process.env.TYPEORM_PORT}",
+  "username": "${process.env.TYPEORM_USERNAME}",
+  "password": "${process.env.TYPEORM_PASSWORD}",
+  "database": "${process.env.TYPEORM_DATABASE}",
+  "entities": ["dist/**/*.entity.js"],
+  "migrations": ["dist/migrations/*.js"],
+  "logging": true,
+  "cli": {
+    "migrationsDir": "src/migrations"
   }
+}
