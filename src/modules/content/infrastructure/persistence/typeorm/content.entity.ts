@@ -1,19 +1,26 @@
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 
+@Entity()
 @ObjectType()
-export class Content {
+export class ContentEntity {
+  @PrimaryGeneratedColumn('uuid')
   @Field(() => ID)
   id: string;
 
+  @Column()
   @Field()
   name: string;
 
+  @Column()
   @Field()
   description: string;
 
+  @Column({ type: 'enum', enum: ['video', 'pdf', 'image'] })
   @Field(() => String)
   type: 'video' | 'pdf' | 'image';
 
+  @Column({ default: 0 })
   @Field(() => Number)
   views: number;
 
