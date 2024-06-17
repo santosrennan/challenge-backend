@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
 import { ContentService } from '@application/services/content.service';
 import { Content } from '@domain/entities/content.entity';
 import { UseGuards } from '@nestjs/common';
@@ -22,8 +22,10 @@ export class ContentResolver {
   }
 
   @Query(() => Content, { nullable: true })
-  content(@Args('id') id: string) {
-    return this.contentService.findOne(id);
+  content(@Args('id') id: string, @Context('req') req) {
+    const userRole = req.user?.role;
+    const userId = req.user?.id;
+    return this.contentService.findOne(id, userRole, userId);
   }
 
   @Roles(UserRole.ADMIN)
@@ -32,7 +34,9 @@ export class ContentResolver {
     @Args('name') name: string,
     @Args('description') description: string,
     @Args('type') type: ContentType,
+    @Context('req') req,
   ) {
+    const userRole = req.user?.role;
     const createContentDto: CreateContentDto = { name, description, type };
     return this.contentService.create(createContentDto);
   }
@@ -40,25 +44,22 @@ export class ContentResolver {
   @Roles(UserRole.ADMIN)
   @Mutation(() => Content, { nullable: true })
   updateContent(
+    @Context('req') req,
     @Args('id') id: string,
     @Args('name', { nullable: true }) name?: string,
     @Args('description', { nullable: true }) description?: string,
     @Args('type', { nullable: true }) type?: ContentType,
   ) {
+    const userRole = req.user?.role;
     const updateContentDto: UpdateContentDto = { name, description, type };
     return this.contentService.update(id, updateContentDto);
   }
 
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
-  async deleteContent(@Args('id') id: string) {
+  async deleteContent(@Args('id') id: string, @Context('req') req) {
+    const userRole = req.user?.role;
     await this.contentService.delete(id);
-    return true;
-  }
-
-  @Mutation(() => Boolean)
-  async incrementContentViews(@Args('id') id: string) {
-    await this.contentService.incrementViews(id);
     return true;
   }
 }

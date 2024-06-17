@@ -2,9 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ContentRepository } from '@domain/repositories/content.repository';
-import { ContentEntity } from './content.entity';
-import { ContentViewEntity } from './content-view.entity';
+import { ContentEntity } from '@infrastructure/persistence/typeorm/content.entity';
+import { ContentViewEntity } from '@infrastructure/persistence/typeorm/content-view.entity';
 import { ContentMapper } from '@application/mappers/content.mapper';
+import { ContentViewMapper } from '@application/mappers/content-view.mapper';
+import { Content } from '@domain/entities/content.entity';
+import { ContentView } from '@domain/entities/content-view.entity';
 
 @Injectable()
 export class TypeORMContentRepository implements ContentRepository {
@@ -18,21 +21,25 @@ export class TypeORMContentRepository implements ContentRepository {
     private readonly contentMapper: ContentMapper,
   ) {}
 
-  async save(content: ContentEntity): Promise<ContentEntity> {
+  async save(content: Content): Promise<Content> {
     const entity = this.contentMapper.domainToEntity(content);
-    const savedEntity = await this.contentRepository.save(entity);
-    return this.contentMapper.entityToDomain(savedEntity);
+    return this.contentRepository
+      .save(entity)
+      .then(this.contentMapper.entityToDomain);
   }
 
-  async findById(id: string): Promise<ContentEntity | null> {
-    const entity = await this.contentRepository.findOne({ where: { id } });
-    if (!entity) return null;
-    return this.contentMapper.entityToDomain(entity);
+  async findById(id: string): Promise<Content | null> {
+    return this.contentRepository
+      .findOne({ where: { id } })
+      .then((entity) =>
+        entity ? this.contentMapper.entityToDomain(entity) : null,
+      );
   }
 
-  async findAll(): Promise<ContentEntity[]> {
-    const entities = await this.contentRepository.find();
-    return entities.map((entity) => this.contentMapper.entityToDomain(entity));
+  async findAll(): Promise<Content[]> {
+    return this.contentRepository
+      .find()
+      .then((entities) => entities.map(this.contentMapper.entityToDomain));
   }
 
   async delete(id: string): Promise<void> {
@@ -50,9 +57,8 @@ export class TypeORMContentRepository implements ContentRepository {
     return count > 0;
   }
 
-  async saveContentView(
-    contentView: ContentViewEntity,
-  ): Promise<ContentViewEntity> {
-    return this.contentViewRepository.save(contentView);
+  async saveContentView(contentView: ContentView): Promise<void> {
+    const entity = ContentViewMapper.toEntity(contentView);
+    await this.contentViewRepository.save(entity);
   }
 }

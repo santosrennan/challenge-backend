@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Content } from '@domain/entities/content.entity';
+import { ContentEntity } from '@infrastructure/persistence/typeorm/content.entity';
 import {
   CreateContentDto,
   UpdateContentDto,
@@ -7,36 +8,37 @@ import {
 
 @Injectable()
 export class ContentMapper {
-  dtoToEntity(createContentDto: CreateContentDto): Content {
+  dtoToEntity(createContentDto: CreateContentDto): ContentEntity {
     const { name, description, type } = createContentDto;
-    return new Content(name, description, type);
+    const contentEntity = new ContentEntity(name, description, type);
+    return contentEntity;
   }
 
   updateDtoToEntity(
-    content: Content,
+    contentEntity: ContentEntity,
     updateContentDto: UpdateContentDto,
-  ): Content {
+  ): ContentEntity {
     const { name, description, type } = updateContentDto;
     if (name !== undefined) {
-      content.name = name;
+      contentEntity.name = name;
     }
     if (description !== undefined) {
-      content.description = description;
+      contentEntity.description = description;
     }
     if (type !== undefined) {
-      content.type = type;
+      contentEntity.type = type;
     }
-    return content;
+    return contentEntity;
   }
 
-  entityToDomain(content: Content): Content {
-    const { id, name, description, type, views } = content;
+  entityToDomain(contentEntity: ContentEntity): Content {
+    const { id, name, description, type, views } = contentEntity;
     return { id, name, description, type, views };
   }
 
-  domainToEntity(content: Content): Content {
+  domainToEntity(content: Content): ContentEntity {
     const { id, name, description, type, views } = content;
-    const contentEntity = new Content(name, description, type);
+    const contentEntity = new ContentEntity(name, description, type);
     contentEntity.id = id;
     contentEntity.views = views;
     return contentEntity;
