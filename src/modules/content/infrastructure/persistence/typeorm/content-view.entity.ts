@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { ContentEntity } from './content.entity';
+import { ContentEntity } from '@infrastructure/persistence/typeorm/content.entity';
 
 @Entity()
 export class ContentViewEntity {
