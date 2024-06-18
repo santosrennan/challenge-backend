@@ -9,7 +9,7 @@ import { ContentType } from '@common/enums/content-type.enum';
 import {
   CreateContentDto,
   UpdateContentDto,
-} from '../../application/dtos/content.dto';
+} from '../application/dtos/content.dto';
 
 @UseGuards(RolesGuard)
 @Resolver(() => Content)
@@ -31,12 +31,11 @@ export class ContentResolver {
   @Roles(UserRole.ADMIN)
   @Mutation(() => Content)
   createContent(
+    @Context('req') req,
     @Args('name') name: string,
     @Args('description') description: string,
     @Args('type') type: ContentType,
-    @Context('req') req,
   ) {
-    const userRole = req.user?.role;
     const createContentDto: CreateContentDto = { name, description, type };
     return this.contentService.create(createContentDto);
   }
@@ -50,7 +49,6 @@ export class ContentResolver {
     @Args('description', { nullable: true }) description?: string,
     @Args('type', { nullable: true }) type?: ContentType,
   ) {
-    const userRole = req.user?.role;
     const updateContentDto: UpdateContentDto = { name, description, type };
     return this.contentService.update(id, updateContentDto);
   }
@@ -58,7 +56,6 @@ export class ContentResolver {
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
   async deleteContent(@Args('id') id: string, @Context('req') req) {
-    const userRole = req.user?.role;
     await this.contentService.delete(id);
     return true;
   }

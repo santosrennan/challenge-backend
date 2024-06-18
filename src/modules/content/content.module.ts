@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ContentService } from '@application/services/content.service';
-import { ContentResolver } from '@infrastructure/presentation/content.resolver';
+import { ContentResolver } from '@presentation/content.resolver';
 import { ContentMapper } from '@application/mappers/content.mapper';
 import { DataModule } from './data.module';
 
