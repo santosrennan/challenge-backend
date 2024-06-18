@@ -5,6 +5,7 @@ import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { join } from 'path';
 import { ContentModule } from './modules/content/content.module';
 import { AuthMiddleware } from '@common/auth/middleware/auth.middleware';
+import { RateLimiterMiddleware } from '@common/rate-limiter/rate-limiter.middleware';
 import { environment } from '@common/config/environment';
 @Module({
   imports: [
@@ -29,6 +30,10 @@ import { environment } from '@common/config/environment';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('*');
+    consumer
+      .apply(RateLimiterMiddleware)
+      .forRoutes('*')
+      .apply(AuthMiddleware)
+      .forRoutes('*');
   }
 }

@@ -25,6 +25,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*","test/**/*.ts","test/**/*.js", "jest-e2e.config.js"],
+  "ignorePatterns": ["<rootDir>/test/jest-e2e.config.js","<rootDir>/test/jest-unit.config.js"],
   "exclude": ["node_modules", "dist"]
 }

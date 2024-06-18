@@ -9,7 +9,7 @@ import { ContentType } from '@common/enums/content-type.enum';
 import {
   CreateContentDto,
   UpdateContentDto,
-} from '../application/dtos/content.dto';
+} from '@application/dtos/content.dto';
 
 @UseGuards(RolesGuard)
 @Resolver(() => Content)
@@ -55,7 +55,7 @@ export class ContentResolver {
 
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
-  async deleteContent(@Args('id') id: string, @Context('req') req) {
+  async deleteContent(@Context('req') req, @Args('id') id: string) {
     await this.contentService.delete(id);
     return true;
   }
