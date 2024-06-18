@@ -5,6 +5,7 @@
       "@domain/*": ["src/modules/content/domain/*"],
       "@infrastructure/*": ["src/modules/content/infrastructure/*"],
       "@application/*": ["src/modules/content/application/*"],
+      "@presentation/*": ["src/modules/content/presentation/*"],
       "@common/*": ["src/common/*"]
     },
     "declaration": true,
