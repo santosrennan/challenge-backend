@@ -7,7 +7,7 @@ import { Request, Response, NextFunction } from 'express';
 import { UserRole } from '@common/auth/roles.enum';
 
 interface CustomRequest extends Request {
-  user?: {
+  user: {
     role: UserRole;
     id: string;
   };
