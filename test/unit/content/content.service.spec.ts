@@ -1,5 +1,3 @@
-// test/unit/services/content.service.spec.ts
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { ContentService } from '@application/services/content.service';
 import { ContentRepository } from '@domain/repositories/content.repository';

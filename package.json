@@ -77,6 +77,18 @@
         "./src/**"
       ],
       "collectCoverage":true,
+      "coveragePathIgnorePatterns": [
+        "./src/main.ts",
+        "./src/app.module.ts",
+        "./src/modules/content/data.module.ts",
+        "./src/modules/content/content.module.ts",
+        "./src/database/seeds/create-initial-data.ts",
+        "./src/common/config/environment.ts"
+      ],
+      "testPathIgnorePatterns": [
+        "./src/database/seeds/",
+        "./src/common/config/"
+      ],
       "coverageDirectory": "./coverage",
       "testEnvironment": "node",
       "moduleNameMapper": {
