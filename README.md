@@ -1,73 +1,152 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://recetadelfuturo.com/wp-content/uploads/2023/06/uol_edtech_marca-e1687787591291.jpg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<h3 align="center">
+    🚧 Plataforma de gerenciamento e visualização de conteúdos 🚧
+</h3>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📓 Desafio
 
-## Description
+Foi solicitado a criação de uma plataforma de gerenciamento e visualização de conteúdos, disponibilizando uma API para o time de front-end com os seguintes requisitos:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Essa API não será pública e será utilizada por dois níveis de usuário: administrador e estudante;
+- Os conteúdos deverão ser gerenciados (criação, atualização e deleção) somente por usuários administradores;
+- Os usuários estudantes poderão apenas visualizar a listagem dos conteúdos disponibilizados na plataforma, e os detalhes específicos de cada um;
+- Os conteúdos deverão ter obrigatoriamente nome, descrição, e tipo;
+- Deverão ser permitidas apenas três strings no tipo do conteúdo: video, pdf ou image;
+- Será necessário contabilizar as visualizações únicas dos estudantes ao acessarem os detalhes do conteúdo;
+- Não é necessário criar um sistema de login ou cadastro/gerenciamento de usuários, apenas uma solução que funcione como uma camada de validação por tokens estáticos.
 
-## Installation
+## 💻 Sobre o projeto
+
+O projeto foi concebido com uma arquitetura de software híbrida que combina práticas de Domain-Driven Design, Clean Architecture, Hexagonal e N-Tier. No entanto, devido ao tamanho do desafio em termos de riqueza de domínio e funcionalidades, optei por não seguir rigidamente uma arquitetura específica, como a Clean Architecture. Isso poderia tornar o projeto mais complexo e difícil de entender do que deveria. A minha ideia é que seja de fácil entendimento para diferentes níveis de senioridade.
+
+Foi adotada uma estrutura simples, mas que incorpora os sólidos conceitos e boas práticas de arquitetura de software. O objetivo é garantir que o projeto seja facilmente compreensível, promovendo a legibilidade do código e a clareza das funcionalidades implementadas. Além disso, busca-se baixo acoplamento, alta coesão e separação clara de responsabilidades, bem como flexibilidade e escalabilidade.
+
+## 🛠 Tecnologias
+
+Segui a stack da empresa:
+
+- NodeJs com Typescript
+- Framework Nest.js
+- Jest para os testes
+- Banco de dados Postgres (poderia ser tranquilamente o Mongodb dentro desse projeto)
+- GraphQL
+
+
+## 🚀 Como executar o projeto
+
+Antes de começar, você vai precisar ter instalado em sua máquina alguns itens:
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) e [Docker](https://www.docker.com/products/docker-desktop/) . 
+Além disto é bom ter um editor para navegar pelo código como [VSCode](https://code.visualstudio.com/) e [Postman](https://www.postman.com/downloads/) para as requisicões ( trabalhando com Graphql você pode usar outras como o playground entre outras, mas eu tenho o costume de usar postman 🤷 )
+
+### Instalando o projeto
 
 ```bash
-$ npm install
+# Clone este repositório
+$ git clone https://github.com/santosrennan/challenge-backend.git
+
+# Instale as dependências
+$ npm install 
 ```
 
-## Running the app
+### Rodando o projeto
+
+Lembre-se de alterar o arquivo .env.example para .env 
 
 ```bash
-# development
-$ npm run start
+# Rode o docker e suba o postgres
+$ docker-compose up -d
 
-# watch mode
-$ npm run start:dev
+# Execute a aplicação node
+$ npm run start ou npm run start:dev
 
-# production mode
-$ npm run start:prod
+# Caso queria da uma populada basica no banco use seeds
+$ npm run seed:run
+
 ```
 
 ## Test
 
 ```bash
-# unit tests
+# Rodando os testes unitarios
 $ npm run test
 
-# e2e tests
+# Rodando os testes e2e (teste com aplicacao de pé)
 $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
 ```
 
-## Support
+## ⚙️ Funcionalidades
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Todos os requisitos foram atendidos e completamos o "CRUD". 
 
-## Stay in touch
+Vejamos algumas chamadas :
+- Headers : `Authorization` = `admin-token` ou `student-token` ; `Userid` : `(Defina um qualquer) exemplo user1`
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Queries:
+```bash
+#consulta todos, regra valida para admin e student
+query Contents {
+    contents {
+        id
+        name
+        description
+        type
+        views
+    }
+}
 
-## License
+#consulta unico content regra valida para admin e student, porem apenas visualizacoes de student sao incrementadas sendo unicas por Userid
+query Content {
+    content(id: null) {
+        id
+        name
+        description
+        type
+        views
+    }
+}
+```
+- Mutations:
 
-Nest is [MIT licensed](LICENSE).
+```bash
+//apenas admins
+mutation CreateContent {
+    createContent(name: null, description: null, type: null) {
+        id
+        name
+        description
+        type
+        views
+    }
+}
+//apenas admins
+mutation UpdateContent {
+    updateContent(id: null, name: null, description: null, type: null) {
+        id
+        name
+        description
+        type
+        views
+    }
+}
+//apenas admins
+mutation DeleteContent {
+    deleteContent(id: null)
+}
+```
+
+## 💡 TO-DO - ROADMAP
+
+Aqui vai alguns itens de melhoria que podem ser realizados visando uma maior escalabilidade do projeto que eu observei ao decorrer:
+
+  - [ ] Uso de cache como do caching do Apollo ou banco Redis;
+  - [ ] Uso de filas como BullMQ, RabbitMQ, SQS trabalhando com comunicação assíncrona;
+  - [ ] Criação de um colletor para métricas e trace para Observabilidade/Monitoria usando bons padrões do opentelemetry nas apis;
+  - [ ] Criação de gerenciamento de usuário para comunicação , através de tokens dinâmicos como JWT 
+
+## 💡 Observações
