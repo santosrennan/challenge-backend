@@ -6,7 +6,10 @@ export class ContentViewEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => ContentEntity, (content) => content.views)
+  @ManyToOne(() => ContentEntity, (content) => content.views, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   content: ContentEntity;
 
   @Column()
