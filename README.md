@@ -34,6 +34,9 @@ Segui a stack da empresa:
 - Banco de dados Postgres (poderia ser tranquilamente o Mongodb dentro desse projeto)
 - GraphQL
 
+```
+typeorm,opentelemetry,express-rate-limit,winston,git,axios,dotenv,docker,apollo, etc...
+```
 
 ## 🚀 Como executar o projeto
 
@@ -73,7 +76,7 @@ $ npm run seed:run
 # Rodando os testes unitarios
 $ npm run test
 
-# Rodando os testes e2e (teste com aplicacao de pé)
+# Rodando os testes e2e (teste com aplicacao de ar e com banco)
 $ npm run test:e2e
 
 # test coverage
@@ -140,13 +143,22 @@ mutation DeleteContent {
 }
 ```
 
+
 ## 💡 TO-DO - ROADMAP
 
 Aqui vai alguns itens de melhoria que podem ser realizados visando uma maior escalabilidade do projeto que eu observei ao decorrer:
 
   - [ ] Uso de cache como do caching do Apollo ou banco Redis;
   - [ ] Uso de filas como BullMQ, RabbitMQ, SQS trabalhando com comunicação assíncrona;
-  - [ ] Criação de um colletor para métricas e trace para Observabilidade/Monitoria usando bons padrões do opentelemetry nas apis;
+  - [ ] Criação de um colletor para métricas e trace para Observabilidade/Monitoria usando bons padrões do opentelemetry nas apis, já foi feito um  `decorator TraceAndLog ` com log e otel no app, para passar por exemplo logstash e zipkin;
   - [ ] Criação de gerenciamento de usuário para comunicação , através de tokens dinâmicos como JWT 
 
+
 ## 💡 Observações
+
+Aqui está meu depoimento sobre o projeto. Tentei focar nos requisitos solicitados e usar a stack da empresa. Tenho muita familiaridade com APIs Rest, porém me desafiei e usei GraphQL para sair da zona de conforto e aproveitar o desafio para praticar abordagens que não uso tanto no dia a dia. Foi bem legal essa parte, pensar de forma diferente.
+
+Tive um problema quando coloquei o projeto Node no Docker para subir com o banco, porque meu notebook não tem muita memória e o Docker estava travando muito, deixando o desenvolvimento muito lento, assim optei por retirar o node e deixar apenas o banco no docker.
+Não mockei completamente o teste E2E nem criei recursos em memória, pois realmente queria ver a performance de alguns pontos, como o rate limit e seu comportamento dentro dessa aplicação. Com recursos mockados, esse teste E2E do ratelimit perderia o sentido, pode se alterado o tamanho do rate no projeto, coloquei um volume pequeno para notebook não travar, então para rodar os teste levante o banco e o app.
+
+Tentei deixar o projeto e o código de forma limpa e clara, e o TO-DO acima reflete o que pensei ao longo do tempo de desenvolvimento. Pensei em implementar um cache em alguma chamada apenas para incrementar o projeto, assim como criar um producer e consumer para usar o conceito de fila e eventos. Também pensei em criar o JWT para não precisar passar o token estático, mas me mantive nos requisitos para não fugir tanto do escopo do projeto e deixar de fazer o que realmente importava e foi solicitado. Nessa parte do token, incluí um UserId nos headers para imaginar o conceito de criação de usuário e controle de acesso, além de comportamentos únicos por ID de usuário. E também aproveitei bastante os recursos do Nestjs então muitas coisas ficaram mais "fáceis" , como por exemplo não precisar gerar o schema graphql, pois usei os decorators do NestJs para fazer essa parte.
