@@ -76,7 +76,7 @@ $ npm run seed:run
 # Rodando os testes unitarios
 $ npm run test
 
-# Rodando os testes e2e (teste com aplicacao de ar e com banco)
+# Rodando os testes e2e (teste com aplicacao e com banco no ar)
 $ npm run test:e2e
 
 # test coverage
@@ -162,3 +162,5 @@ Tive um problema quando coloquei o projeto Node no Docker para subir com o banco
 Não mockei completamente o teste E2E nem criei recursos em memória, pois realmente queria ver a performance de alguns pontos, como o rate limit e seu comportamento dentro dessa aplicação. Com recursos mockados, esse teste E2E do ratelimit perderia o sentido, pode se alterado o tamanho do rate no projeto, coloquei um volume pequeno para notebook não travar, então para rodar os teste levante o banco e o app.
 
 Tentei deixar o projeto e o código de forma limpa e clara, e o TO-DO acima reflete o que pensei ao longo do tempo de desenvolvimento. Pensei em implementar um cache em alguma chamada apenas para incrementar o projeto, assim como criar um producer e consumer para usar o conceito de fila e eventos. Também pensei em criar o JWT para não precisar passar o token estático, mas me mantive nos requisitos para não fugir tanto do escopo do projeto e deixar de fazer o que realmente importava e foi solicitado. Nessa parte do token, incluí um UserId nos headers para imaginar o conceito de criação de usuário e controle de acesso, além de comportamentos únicos por ID de usuário. E também aproveitei bastante os recursos do Nestjs então muitas coisas ficaram mais "fáceis" , como por exemplo não precisar gerar o schema graphql, pois usei os decorators do NestJs para fazer essa parte.
+
+Qualquer duvida só chamar! 
