@@ -8,6 +8,7 @@ import { ContentMapper } from '@application/mappers/content.mapper';
 import { ContentRepository } from '@domain/repositories/content.repository';
 import { UserRole } from '@common/auth/roles.enum';
 import { ContentView } from '@domain/entities/content-view.entity';
+import { TraceAndLog } from '@common/decorators/logging.decorator';
 
 @Injectable()
 export class ContentService {
@@ -17,10 +18,11 @@ export class ContentService {
     private readonly contentMapper: ContentMapper,
   ) {}
 
+  @TraceAndLog('findAll')
   async findAll(): Promise<Content[]> {
     return this.contentRepository.findAll();
   }
-
+  @TraceAndLog('findOne')
   async findOne(
     id: string,
     userRole: UserRole,
@@ -38,12 +40,13 @@ export class ContentService {
     return content;
   }
 
+  @TraceAndLog('create')
   async create(createContentDto: CreateContentDto): Promise<Content> {
     const content = this.contentMapper.dtoToEntity(createContentDto);
     const savedContent = await this.contentRepository.save(content);
     return this.contentMapper.entityToDomain(savedContent);
   }
-
+  @TraceAndLog('update')
   async update(
     id: string,
     updateContentDto: UpdateContentDto,
@@ -59,7 +62,7 @@ export class ContentService {
     const savedContent = await this.contentRepository.save(updatedContent);
     return this.contentMapper.entityToDomain(savedContent);
   }
-
+  @TraceAndLog('delete')
   async delete(id: string): Promise<void> {
     await this.contentRepository.delete(id);
   }

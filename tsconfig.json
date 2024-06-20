@@ -25,7 +25,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/**/*","test/**/*.ts","test/**/*.js", "jest-e2e.config.js"],
+  "include": ["src/**/*","test/**/*.ts","test/**/*.js", "jest-e2e.config.js","otel-config.ts"],
   "ignorePatterns": ["<rootDir>/test/jest-e2e.config.js","<rootDir>/test/jest-unit.config.js"],
   "exclude": ["node_modules", "dist"]
 }

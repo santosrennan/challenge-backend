@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { AppModule } from '../../../src/app.module';
 
+//rode com o banco e app no ar
 describe('Rate Limiter (e2e)', () => {
   let app: INestApplication;
   const url = 'http://localhost:3000/graphql';

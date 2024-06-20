@@ -6,22 +6,23 @@ import { Roles } from '@common/auth/decorators/roles.decorator';
 import { RolesGuard } from '@common/auth/guards/roles.guard';
 import { UserRole } from '@common/auth/roles.enum';
 import { ContentType } from '@common/enums/content-type.enum';
+import { TraceAndLog } from '@common/decorators/logging.decorator';
 import {
   CreateContentDto,
   UpdateContentDto,
 } from '@application/dtos/content.dto';
-
 @UseGuards(RolesGuard)
 @Resolver(() => Content)
 export class ContentResolver {
   constructor(private readonly contentService: ContentService) {}
 
   @Query(() => [Content])
+  @TraceAndLog('findAllContentRepository')
   contents() {
     return this.contentService.findAll();
   }
-
   @Query(() => Content, { nullable: true })
+  @TraceAndLog('findOneContentRepository')
   content(@Args('id') id: string, @Context('req') req) {
     const userRole = req.user?.role;
     const userId = req.user?.id;
@@ -30,6 +31,7 @@ export class ContentResolver {
 
   @Roles(UserRole.ADMIN)
   @Mutation(() => Content)
+  @TraceAndLog('createContentRepository')
   createContent(
     @Context('req') req,
     @Args('name') name: string,
@@ -42,6 +44,7 @@ export class ContentResolver {
 
   @Roles(UserRole.ADMIN)
   @Mutation(() => Content, { nullable: true })
+  @TraceAndLog('updateContentRepository')
   updateContent(
     @Context('req') req,
     @Args('id') id: string,
@@ -55,6 +58,7 @@ export class ContentResolver {
 
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
+  @TraceAndLog('deleteContentRepository')
   async deleteContent(@Context('req') req, @Args('id') id: string) {
     await this.contentService.delete(id);
     return true;
